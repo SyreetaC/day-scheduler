@@ -28,6 +28,7 @@ const setTextAreaColour = () => {
   }
 };
 
+//TO WORK ON
 const setColours = () => {
   allTextAreas.each(setTextAreaColour);
 };
