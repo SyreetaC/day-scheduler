@@ -7,15 +7,21 @@ $(document).ready(function () {
 });
 
 //set text area colours based on time.
-const setTextAreaColour = (index) => {
+const setTextAreaColour = () => {
   //Get the hour from moment
   currentTimeString = moment().format("H");
   const currentTimeNumber = parseInt(currentTimeString);
+  //Take that hour and turn it into a string
+  console.log(currentTimeNumber);
+
+  //get values of text areas for comparison
+  let scheduleTimeBlock = $(allTextAreas).attr("data-time");
+  console.log(scheduleTimeBlock);
 };
 
-//Take that hour and turn it into a string
-
-//get values of text areas for comparison
+const setColours = () => {
+  allTextAreas.each(setTextAreaColour);
+};
 
 //if string matches string from data-time, then change class to present.
 //if string is > string from data-time, then change class to future.
