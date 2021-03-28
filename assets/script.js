@@ -12,7 +12,7 @@ const setTextAreaColour = () => {
 
   //Take that hour and turn it into a string
 
-  //if string matches string from hour string, then change class to present.
-  //if string is > string from hour string, then change class to future.
+  //if string matches string from data-time, then change class to present.
+  //if string is > string from data-time, then change class to future.
   //else keep as past.
 };
