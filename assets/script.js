@@ -1,5 +1,5 @@
 const currentDay = document.getElementById("currentDay");
-const timeOfDay = document.querySelector("#past");
+// const timeOfDay = document.querySelector("#past");
 const allTextAreas = document.getElementsByTagName("textarea");
 
 $(document).ready(function () {
@@ -15,8 +15,17 @@ const setTextAreaColour = () => {
   console.log(currentTimeNumber);
 
   //get values of text areas for comparison
-  let scheduleTimeBlock = $(allTextAreas).attr("data-time");
-  console.log(scheduleTimeBlock);
+  let scheduleTime = $(allTextAreas).attr("data-time");
+  console.log(scheduleTime);
+
+  //Compare the values of the current time and the time blocks on the schedule
+  if (currentTimeString === scheduleTime) {
+    $(allTextAreas).addClass("present");
+  } else if (currentTimeString < scheduleTime) {
+    $(allTextAreas).addClass("future");
+  } else if (currentTimeString > scheduleTime) {
+    $(allTextAreas).addClass("past");
+  }
 };
 
 const setColours = () => {
