@@ -26,17 +26,14 @@ const setTextAreaColour = () => {
   } else if (currentTimeString > scheduleTime) {
     $(allTextAreas).addClass("past");
   }
+  //if string matches string from data-time, then change class to present.
+  //if string is > string from data-time, then change class to future.
+  //else keep as past.
 };
 
-//TO WORK ON
+//TO WORK ON- FOR EACH METHOD
 const setColours = () => {
   allTextAreas.each(setTextAreaColour);
 };
-
-//if string matches string from data-time, then change class to present.
-//if string is > string from data-time, then change class to future.
-//else keep as past.
-
-// $("textarea").each(function ()
 
 $(document).ready(setTextAreaColour);
