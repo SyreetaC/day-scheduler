@@ -8,22 +8,18 @@ $(document).ready(function () {
 //set text area colours based on time.
 const setTextAreaColour = (index) => {
   //Get the hour from moment
-  currentTimeString = moment().hour();
-  const currentHour = parseInt(currentTimeString);
-  //Take that hour and turn it into a string
+  currentHour = moment().hour();
 
   //get values of text areas for comparison
   let scheduleTime = $(allTextAreas[index]).attr("data-time");
 
   //Compare the values of the current time and the time blocks on the schedule
-  if (currentHour === scheduleTime) {
-    $(allTextAreas[index]).removeClass("past");
-    $(allTextAreas[index]).addClass("present");
+  if (currentHour == scheduleTime) {
+    $(allTextAreas[index]).removeClass("past").addClass("present");
   } else if (currentHour < scheduleTime) {
-    $(allTextAreas[index]).removeClass("past");
-    $(allTextAreas[index]).addClass("future");
+    $(allTextAreas[index]).removeClass("past").addClass("future");
   } else if (currentHour > scheduleTime) {
-    $(allTextAreas[index]).addClass("past");
+    $(allTextAreas[index]).removeClass("past").addClass("past");
   }
   //if string matches string from data-time, then change class to present.
   //if string is > string from data-time, then change class to future.
@@ -35,7 +31,6 @@ $(allTextAreas).each(setTextAreaColour);
 const setUpLocalStorage = () => {
   const dayScheduleMemory = localStorage.getItem("day-schedule");
   if (dayScheduleMemory === null) {
-    console.log("Set up local memory");
     const schedule = {
       9: {
         task: "",
@@ -76,7 +71,7 @@ const setUpLocalStorage = () => {
 const setTaskIntoMemory = () => {
   let task = allTextAreas[index].value;
   console.log(task);
-  // const scheduleMemory = localStorage;
+  const scheduleMemory = localStorage.setItem(task);
 };
 
 //link save button to local storage
@@ -85,6 +80,6 @@ const setTaskIntoMemory = () => {
 
 $(document).ready(setTextAreaColour);
 $(document).ready(setUpLocalStorage);
-$(document).ready(setTaskIntoMemory);
+// $(document).ready(setTaskIntoMemory);
 
 // document.ready for every function
