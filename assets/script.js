@@ -8,7 +8,7 @@ $(document).ready(function () {
 //set text area colours based on time.
 const setTextAreaColour = (index) => {
   //Get the hour from moment
-  currentTimeString = moment().format("H");
+  currentTimeString = moment().hour();
   const currentHour = parseInt(currentTimeString);
   //Take that hour and turn it into a string
 
