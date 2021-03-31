@@ -6,20 +6,20 @@ $(document).ready(function () {
 });
 
 //set text area colours based on time.
-const setTextAreaColour = (index) => {
+const setTextAreaColour = (index, element) => {
   //Get the hour from moment
-  currentHour = moment().hour();
+  currentHour = moment().hour() - 10; //Im for testing!!
 
   //get values of text areas for comparison
-  let scheduleTime = $(allTextAreas[index]).attr("data-time");
+  let scheduleTime = parseInt($(element).attr("data-time"));
 
   //Compare the values of the current time and the time blocks on the schedule
-  if (currentHour == scheduleTime) {
-    $(allTextAreas[index]).removeClass("past").addClass("present");
+  if (currentHour === scheduleTime) {
+    $(element).removeClass("past").addClass("present");
   } else if (currentHour < scheduleTime) {
-    $(allTextAreas[index]).removeClass("past").addClass("future");
+    $(element).removeClass("past").addClass("future");
   } else if (currentHour > scheduleTime) {
-    $(allTextAreas[index]).removeClass("past").addClass("past");
+    $(element).removeClass("past").addClass("past");
   }
   //if string matches string from data-time, then change class to present.
   //if string is > string from data-time, then change class to future.
@@ -29,48 +29,70 @@ $(allTextAreas).each(setTextAreaColour);
 
 //check if anything is in local storage- else return whatever was previously in local storage
 const setUpLocalStorage = () => {
-  const dayScheduleMemory = localStorage.getItem("day-schedule");
+  const dayScheduleMemory = localStorage.getItem("schedule");
   if (dayScheduleMemory === null) {
-    const schedule = {
-      9: {
+    const schedule = [
+      {
+        hour: 9,
         task: "",
       },
-      10: {
+      {
+        hour: 10,
         task: "",
       },
-      11: {
+      {
+        hour: 11,
         task: "",
       },
-      12: {
+      {
+        hour: 12,
         task: "",
       },
-      13: {
+      {
+        hour: 13,
         task: "",
       },
-      14: {
+      {
+        hour: 14,
         task: "",
       },
-      15: {
+      {
+        hour: 15,
         task: "",
       },
-      16: {
+      {
+        hour: 16,
         task: "",
       },
-      17: {
+      {
+        hour: 17,
         task: "",
       },
-    };
+    ];
     //set up local storage with empty objects
     const scheduleString = JSON.stringify(schedule);
     localStorage.setItem("schedule", scheduleString);
   } else {
-    console.log("memory exists!");
+    console.log("memory exists!"); //Populate all text areas with existing data
+    const scheduleArray = JSON.parse(dayScheduleMemory);
+    $(allTextAreas).each(function (index, element) {
+      //Loop over all text areas
+      let scheduleTime = parseInt($(element).attr("data-time"));
+
+      for (const taskObj of scheduleArray) {
+        //Loop over all tasks stored in localstorage
+        if (scheduleTime === taskObj.hour) {
+          //Set the value of the textarea that matches localstorage
+          $(element).val(taskObj.task);
+        }
+      }
+    });
   }
 };
 
-const setTaskIntoMemory = () => {
+const saveTask = (event) => {
   let task = allTextAreas[index].value;
-  console.log(task);
+  console.log("task here");
   const scheduleMemory = localStorage.setItem(task);
 };
 
@@ -80,6 +102,7 @@ const setTaskIntoMemory = () => {
 
 $(document).ready(setTextAreaColour);
 $(document).ready(setUpLocalStorage);
-// $(document).ready(setTaskIntoMemory);
+//New click event for button
+//$(".whateverClass").on("click", "button", saveTask);
 
 // document.ready for every function
