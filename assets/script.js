@@ -1,26 +1,28 @@
-const currentDay = $("#currentDay");
 const allTextAreas = $(".container").children().children("textarea");
 
 $(document).ready(function () {
-  $(currentDay).text(moment().format("dddd, MMMM Do YYYY, h:mm:ss a"));
+  const currentDay = $("#currentDay");
+  $(currentDay).text(moment().format("dddd, MMMM Do YYYY"));
 });
 
 //set text area colours based on time.
 const setTextAreaColour = (index) => {
   //Get the hour from moment
   currentTimeString = moment().format("H");
-  const currentTimeNumber = parseInt(currentTimeString);
+  const currentHour = parseInt(currentTimeString);
   //Take that hour and turn it into a string
 
   //get values of text areas for comparison
   let scheduleTime = $(allTextAreas[index]).attr("data-time");
 
   //Compare the values of the current time and the time blocks on the schedule
-  if (currentTimeNumber === scheduleTime) {
+  if (currentHour === scheduleTime) {
+    $(allTextAreas[index]).removeClass("past");
     $(allTextAreas[index]).addClass("present");
-  } else if (currentTimeNumber < scheduleTime) {
+  } else if (currentHour < scheduleTime) {
+    $(allTextAreas[index]).removeClass("past");
     $(allTextAreas[index]).addClass("future");
-  } else if (currentTimeNumber > scheduleTime) {
+  } else if (currentHour > scheduleTime) {
     $(allTextAreas[index]).addClass("past");
   }
   //if string matches string from data-time, then change class to present.
@@ -30,7 +32,7 @@ const setTextAreaColour = (index) => {
 $(allTextAreas).each(setTextAreaColour);
 
 //check if anything is in local storage- else return whatever was previously in local storage
-const setUpLocalMemory = () => {
+const setUpLocalStorage = () => {
   const dayScheduleMemory = localStorage.getItem("day-schedule");
   if (dayScheduleMemory === null) {
     console.log("Set up local memory");
@@ -82,7 +84,7 @@ const setTaskIntoMemory = () => {
 //set interval so (set text area colour function) colours automatically change after a particular time.
 
 $(document).ready(setTextAreaColour);
-$(document).ready(setUpLocalMemory);
+$(document).ready(setUpLocalStorage);
 $(document).ready(setTaskIntoMemory);
 
 // document.ready for every function
