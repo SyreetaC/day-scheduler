@@ -90,9 +90,21 @@ const setUpLocalStorage = () => {
   }
 };
 
-const saveTask = (index, event) => {
-  let task = allTextAreas[index].value;
-  console.log("task here");
+const saveTask = (event) => {
+  const target = event.target;
+  const currentTarget = event.currentTarget;
+  console.log(event.target);
+  if (target.localName === "button" || target.localName === "i") {
+    //get data from given text areas
+    console.log(event.currentTarget);
+    const input = $(currentTarget).children().children("textarea").val();
+    console.log(input);
+    // const time = target.parent().children("textarea").dataset.time;
+    // const input = target.parent().children("textarea").val();
+  }
+
+  //from event.currenttarget, find child that is text area- then get content and assign to variable
+  //save to local storage
   const dayScheduleMemory = localStorage.getItem("schedule");
   const dayScheduleObject = JSON.parse(dayScheduleMemory);
 };
@@ -104,7 +116,7 @@ const saveTask = (index, event) => {
 $(document).ready(setTextAreaColour);
 $(document).ready(setUpLocalStorage);
 $(document).ready(setUpLocalStorage);
-$(".container").on("click", "button", saveTask);
+$(".container").on("click", saveTask);
 //New click event for button
 //$(".whateverClass").on("click", "button", saveTask);-- ".container" to be clicked on
 //
