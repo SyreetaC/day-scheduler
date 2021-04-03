@@ -8,7 +8,7 @@ $(document).ready(function () {
 //set text area colours based on time.
 const setTextAreaColour = (index, element) => {
   //Get the hour from moment
-  currentHour = moment().hour() - 10; //Im for testing!!
+  currentHour = moment().hour();
 
   //get values of text areas for comparison
   let scheduleTime = parseInt($(element).attr("data-time"));
@@ -73,7 +73,7 @@ const setUpLocalStorage = () => {
     const scheduleString = JSON.stringify(schedule);
     localStorage.setItem("schedule", scheduleString);
   } else {
-    console.log("memory exists!"); //Populate all text areas with existing data
+    //Populate all text areas with existing data
     const scheduleArray = JSON.parse(dayScheduleMemory);
     $(allTextAreas).each(function (index, element) {
       //Loop over all text areas
@@ -90,10 +90,11 @@ const setUpLocalStorage = () => {
   }
 };
 
-const saveTask = (event) => {
+const saveTask = (index, event) => {
   let task = allTextAreas[index].value;
   console.log("task here");
-  const scheduleMemory = localStorage.setItem(task);
+  const dayScheduleMemory = localStorage.getItem("schedule");
+  const dayScheduleObject = JSON.parse(dayScheduleMemory);
 };
 
 //link save button to local storage
@@ -102,7 +103,9 @@ const saveTask = (event) => {
 
 $(document).ready(setTextAreaColour);
 $(document).ready(setUpLocalStorage);
+$(document).ready(setUpLocalStorage);
+$(".container").on("click", "button", saveTask);
 //New click event for button
-//$(".whateverClass").on("click", "button", saveTask);
-
+//$(".whateverClass").on("click", "button", saveTask);-- ".container" to be clicked on
+//
 // document.ready for every function
