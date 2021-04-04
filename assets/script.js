@@ -91,22 +91,22 @@ const setUpLocalStorage = () => {
 };
 
 const saveTask = (event) => {
+  const dayScheduleMemory = JSON.parse(localStorage.getItem("schedule"));
   const target = event.target;
-  const currentTarget = event.currentTarget;
-  console.log(event.target);
   if (target.localName === "button" || target.localName === "i") {
+    const key = target.getAttribute("id");
+    const value = target.parent().find("textarea").val();
     //get data from given text areas
-    console.log(event.currentTarget);
-    const input = $(currentTarget).children().children("textarea").val();
-    console.log(input);
-    // const time = target.parent().children("textarea").dataset.time;
-    // const input = target.parent().children("textarea").val();
+
+    const newObject = {
+      ...schedule,
+      [key]: value,
+    };
+    localStorage.setItem("schedule", JSON.stringify(newObject));
   }
 
   //from event.currenttarget, find child that is text area- then get content and assign to variable
   //save to local storage
-  const dayScheduleMemory = localStorage.getItem("schedule");
-  const dayScheduleObject = JSON.parse(dayScheduleMemory);
 };
 
 //link save button to local storage
