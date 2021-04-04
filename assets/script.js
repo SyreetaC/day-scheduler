@@ -104,18 +104,10 @@ const saveTask = (event) => {
       key = target.parent().attr("id");
       value = target.parent().parent().find("textarea").val();
     }
-    console.log(target);
-
-    console.log(key);
-
-    console.log(value);
 
     //get data from given text areas
     const callback = (acc, currentValue) => {
-      console.log(acc);
-      console.log(currentValue);
       if (key == currentValue.hour) {
-        console.log("here");
         acc.push({
           ...currentValue,
           task: value,
@@ -133,10 +125,6 @@ const saveTask = (event) => {
   //save to local storage
 };
 
-//link save button to local storage
-//remember that favicon is a child of the button!
-//set interval so (set text area colour function) colours automatically change after a particular time.
-
 $(document).ready(setTextAreaColour);
 $(document).ready(setUpLocalStorage);
 $(".container").on("click", "button", saveTask);
@@ -144,6 +132,3 @@ $(".container").on("click", "button", saveTask);
 // function to check the time every 10 seconds and reset textarea colours if needed
 setInterval(setTextAreaColour, 10000);
 //New click event for button
-//$(".whateverClass").on("click", "button", saveTask);-- ".container" to be clicked on
-//
-// document.ready for every function
