@@ -92,20 +92,44 @@ const setUpLocalStorage = () => {
 
 const saveTask = (event) => {
   const dayScheduleMemory = JSON.parse(localStorage.getItem("schedule"));
-  const target = event.target;
-  if (target.localName === "button" || target.localName === "i") {
-    const key = target.getAttribute("id");
-    const value = target.parent().find("textarea").val();
-    //get data from given text areas
+  const target = $(event.target);
+  if (target.is("button") || target.is("i")) {
+    let key;
+    let value;
+    if (target.is("button")) {
+      key = target.attr("id");
+      value = target.parent().find("textarea").val();
+    }
+    if (target.is("i")) {
+      key = target.parent().attr("id");
+      value = target.parent().parent().find("textarea").val();
+    }
+    console.log(target);
 
-    const newObject = {
-      ...schedule,
-      [key]: value,
+    console.log(key);
+
+    console.log(value);
+
+    //get data from given text areas
+    const callback = (acc, currentValue) => {
+      console.log(acc);
+      console.log(currentValue);
+      if (key == currentValue.hour) {
+        console.log("here");
+        acc.push({
+          ...currentValue,
+          task: value,
+        });
+        return acc;
+      } else {
+        acc.push(currentValue);
+        return acc;
+      }
     };
-    localStorage.setItem("schedule", JSON.stringify(newObject));
+    const newArray = dayScheduleMemory.reduce(callback, []);
+    localStorage.setItem("schedule", JSON.stringify(newArray));
   }
 
-  //from event.currenttarget, find child that is text area- then get content and assign to variable
   //save to local storage
 };
 
@@ -115,8 +139,10 @@ const saveTask = (event) => {
 
 $(document).ready(setTextAreaColour);
 $(document).ready(setUpLocalStorage);
-$(document).ready(setUpLocalStorage);
-$(".container").on("click", saveTask);
+$(".container").on("click", "button", saveTask);
+
+// function to check the time every 10 seconds and reset textarea colours if needed
+setInterval(setTextAreaColour, 10000);
 //New click event for button
 //$(".whateverClass").on("click", "button", saveTask);-- ".container" to be clicked on
 //
