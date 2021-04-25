@@ -1,9 +1,9 @@
 const allTextAreas = $(".container").children().children("textarea");
 
-$(document).ready(function () {
-  const currentDay = $("#currentDay");
-  $(currentDay).text(moment().format("dddd, MMMM Do YYYY"));
-});
+const renderCurrentDay = () => {
+  const currentDay = moment().format("dddd, MMMM Do YYYY");
+  $("#currentDay").text(currentDay);
+};
 
 //set text area colours based on time.
 const setTextAreaColour = (index, element) => {
@@ -125,6 +125,7 @@ const saveTask = (event) => {
   //save to local storage
 };
 
+$(document).ready(renderCurrentDay);
 $(document).ready(setTextAreaColour);
 $(document).ready(setUpLocalStorage);
 $(".container").on("click", "button", saveTask);
