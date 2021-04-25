@@ -25,7 +25,6 @@ const setTextAreaColour = (index, element) => {
   //if string is > string from data-time, then change class to future.
   //else keep as past.
 };
-$(allTextAreas).each(setTextAreaColour);
 
 //check if anything is in local storage- else return whatever was previously in local storage
 const setUpLocalStorage = () => {
@@ -125,9 +124,17 @@ const saveTask = (event) => {
   //save to local storage
 };
 
-$(document).ready(renderCurrentDay);
-$(document).ready(setTextAreaColour);
-$(document).ready(setUpLocalStorage);
+const onReady = () => {
+  renderCurrentDay();
+
+  $(allTextAreas).each(setTextAreaColour);
+  setTextAreaColour();
+
+  setUpLocalStorage();
+};
+
+$(document).ready(onReady);
+
 $(".container").on("click", "button", saveTask);
 
 // function to check the time every 10 seconds and reset textarea colours if needed
