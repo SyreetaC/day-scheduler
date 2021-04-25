@@ -6,27 +6,20 @@ const renderCurrentDay = () => {
 };
 
 const setTextAreaColours = () => {
-  //set text area colours based on time.
   const setTextAreaColour = (index, element) => {
-    //Get the hour from moment
-    currentHour = moment().hour();
+    const currentHour = moment().hour();
+    const scheduleTime = parseInt($(element).attr("data-time"));
 
-    //get values of text areas for comparison
-    let scheduleTime = parseInt($(element).attr("data-time"));
-
-    //Compare the values of the current time and the time blocks on the schedule
     if (currentHour === scheduleTime) {
       $(element).removeClass("past").addClass("present");
-    } else if (currentHour < scheduleTime) {
-      $(element).removeClass("past").addClass("future");
-    } else if (currentHour > scheduleTime) {
-      $(element).removeClass("past").addClass("past");
     }
-    //if string matches string from data-time, then change class to present.
-    //if string is > string from data-time, then change class to future.
-    //else keep as past.
+
+    if (currentHour < scheduleTime) {
+      $(element).removeClass("past").addClass("future");
+    }
   };
-  $(allTextAreas).each(setTextAreaColour);
+
+  $('textarea[name="note"]').each(setTextAreaColour);
 };
 
 //check if anything is in local storage- else return whatever was previously in local storage
