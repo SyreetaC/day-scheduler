@@ -55,21 +55,24 @@ const setUpLocalStorage = () => {
 };
 
 const saveTask = (event) => {
-  const dayScheduleMemory = JSON.parse(localStorage.getItem("schedule"));
   const target = $(event.target);
+
   if (target.is("button") || target.is("i")) {
     let key;
     let value;
+
+    const dayScheduleMemory = JSON.parse(localStorage.getItem("schedule"));
+
     if (target.is("button")) {
       key = target.attr("id");
       value = target.parent().find("textarea").val();
     }
+
     if (target.is("i")) {
       key = target.parent().attr("id");
       value = target.parent().parent().find("textarea").val();
     }
 
-    //get data from given text areas
     const callback = (acc, currentValue) => {
       if (key == currentValue.hour) {
         acc.push({
@@ -82,7 +85,9 @@ const saveTask = (event) => {
         return acc;
       }
     };
+
     const newArray = dayScheduleMemory.reduce(callback, []);
+
     localStorage.setItem("schedule", JSON.stringify(newArray));
   }
 
@@ -97,9 +102,9 @@ const onReady = () => {
   setUpLocalStorage();
 };
 
-$(document).ready(onReady);
+$('button[name="save-btn"]').click(saveTask);
 
-$(".container").on("click", "button", saveTask);
+$(document).ready(onReady);
 
 // function to check the time every 10 seconds and reset textarea colours if needed
 // setInterval(setTextAreaColour, 10000);
