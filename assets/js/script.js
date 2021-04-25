@@ -1,5 +1,3 @@
-const allTextAreas = $(".container").children().children("textarea");
-
 const renderCurrentDay = () => {
   const currentDay = moment().format("dddd, MMMM Do YYYY");
   $("#currentDay").text(currentDay);
@@ -111,7 +109,3 @@ const onReady = () => {
 $('button[name="save-btn"]').click(saveTask);
 
 $(document).ready(onReady);
-
-// function to check the time every 10 seconds and reset textarea colours if needed
-// setInterval(setTextAreaColour, 10000);
-//New click event for button
