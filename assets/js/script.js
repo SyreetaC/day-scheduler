@@ -54,6 +54,10 @@ const setUpLocalStorage = () => {
   }
 };
 
+const startTimer = () => {
+  setInterval(setTextAreaColours, 10000);
+};
+
 const saveTask = (event) => {
   const target = $(event.target);
 
@@ -100,6 +104,8 @@ const onReady = () => {
   setTextAreaColours();
 
   setUpLocalStorage();
+
+  startTimer();
 };
 
 $('button[name="save-btn"]').click(saveTask);
