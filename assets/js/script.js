@@ -22,66 +22,35 @@ const setTextAreaColours = () => {
   $('textarea[name="note"]').each(setTextAreaColour);
 };
 
-//check if anything is in local storage- else return whatever was previously in local storage
 const setUpLocalStorage = () => {
-  const dayScheduleMemory = localStorage.getItem("schedule");
+  const dayScheduleMemory = JSON.parse(localStorage.getItem("schedule"));
+
   if (dayScheduleMemory === null) {
     const schedule = [
-      {
-        hour: 9,
-        task: "",
-      },
-      {
-        hour: 10,
-        task: "",
-      },
-      {
-        hour: 11,
-        task: "",
-      },
-      {
-        hour: 12,
-        task: "",
-      },
-      {
-        hour: 13,
-        task: "",
-      },
-      {
-        hour: 14,
-        task: "",
-      },
-      {
-        hour: 15,
-        task: "",
-      },
-      {
-        hour: 16,
-        task: "",
-      },
-      {
-        hour: 17,
-        task: "",
-      },
+      { hour: 9, task: "" },
+      { hour: 10, task: "" },
+      { hour: 11, task: "" },
+      { hour: 12, task: "" },
+      { hour: 13, task: "" },
+      { hour: 14, task: "" },
+      { hour: 15, task: "" },
+      { hour: 16, task: "" },
+      { hour: 17, task: "" },
     ];
-    //set up local storage with empty objects
-    const scheduleString = JSON.stringify(schedule);
-    localStorage.setItem("schedule", scheduleString);
-  } else {
-    //Populate all text areas with existing data
-    const scheduleArray = JSON.parse(dayScheduleMemory);
-    $(allTextAreas).each(function (index, element) {
-      //Loop over all text areas
-      let scheduleTime = parseInt($(element).attr("data-time"));
 
-      for (const taskObj of scheduleArray) {
-        //Loop over all tasks stored in localstorage
+    localStorage.setItem("schedule", JSON.stringify(schedule));
+  } else {
+    const updateTextArea = (index, element) => {
+      const scheduleTime = parseInt($(element).attr("data-time"));
+
+      for (const taskObj of dayScheduleMemory) {
         if (scheduleTime === taskObj.hour) {
-          //Set the value of the textarea that matches localstorage
           $(element).val(taskObj.task);
         }
       }
-    });
+    };
+
+    $('textarea[name="note"]').each(updateTextArea);
   }
 };
 
